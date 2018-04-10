@@ -4,7 +4,7 @@
 		module="basicakkahttp_2.12"
 		revision="1.0"
 		status="integration"
-		publication="20180404121824"
+		publication="20180406122006"
 	>
 		<description>
 		BasicAkkaHTTP
@@ -46,5 +46,12 @@
 		<dependency org="org.json4s" name="json4s-native_2.12" rev="3.5.2" conf="compile->default(compile)"/>
 		<dependency org="org.json4s" name="json4s-ext_2.12" rev="3.5.2" conf="compile->default(compile)"/>
 		<dependency org="de.heikoseeberger" name="akka-http-json4s_2.12" rev="1.16.0" conf="compile->default(compile)"/>
+		<dependency org="de.heikoseeberger" name="akka-http-jackson_2.12" rev="1.18.0" conf="compile->default(compile)"/>
+		<dependency org="org.mongodb.scala" name="mongo-scala-driver_2.12" rev="2.2.1" conf="compile->default(compile)"/>
+		<dependency org="org.scalatest" name="scalatest_2.12" rev="3.0.1" conf="test->default(compile)"/>
+		<dependency org="org.pegdown" name="pegdown" rev="1.6.0" conf="test->default(compile)"/>
+		<dependency org="com.typesafe.akka" name="akka-http-testkit_2.12" rev="10.0.6" conf="test->default(compile)"/>
+		<dependency org="org.mongodb" name="mongo-java-driver" rev="3.4.0" conf="test->default(compile)"/>
+		<dependency org="com.github.fakemongo" name="fongo" rev="2.1.0" conf="test->default(compile)"/>
 	</dependencies>
 </ivy-module>

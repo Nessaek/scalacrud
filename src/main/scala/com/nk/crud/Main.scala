@@ -1,29 +1,29 @@
 package com.nk.crud
 
-import akka.actor._
+import akka.actor.ActorSystem
 import akka.http.scaladsl.Http
 import akka.stream.ActorMaterializer
-import akka.util.Timeout
-import com.typesafe.config.ConfigFactory
+import com.nk.crud.database.Mongo
+import com.nk.crud.repo.ImageRepository
+import com.nk.crud.resource.ImageEndpoint
 
-import scala.concurrent.duration._
-
-object Main extends App with RestInterface {
-  val config = ConfigFactory.load()
-  val host = config.getString("http.host")
-  val port = config.getInt("http.port")
-
-  implicit val system = ActorSystem("BasicAkkaHTTP")
-  implicit val materializer = ActorMaterializer()
+import scala.concurrent.ExecutionContext
+import scala.util.{Failure, Success}
 
 
-  implicit val executionContext = system.dispatcher
-  implicit val timeout = Timeout(10 seconds)
+object Main extends App with ImageEndpoint {
 
-  val api = routes
 
-  Http().bindAndHandle(handler = api, interface = "localhost", port = 8080) map { binding =>
-    println(s"REST interface bound to ${binding.localAddress}") } recover { case ex =>
-    println(s"REST interface could not bind to $host:$port", ex.getMessage)
+  implicit val sys: ActorSystem = ActorSystem("akka-http-mongodb-microservice")
+  implicit val mat: ActorMaterializer = ActorMaterializer()
+  implicit val ec: ExecutionContext = sys.dispatcher
+
+  val log = sys.log
+
+  override val repository: ImageRepository = new ImageRepository(Mongo.imageCollection)
+
+  Http().bindAndHandle(imageRoute, "0.0.0.0", 8080).onComplete {
+    case Success(b) => log.info(s"application is up and running at ${b.localAddress.getHostName}:${b.localAddress.getPort}")
+    case Failure(e) => log.error(s"could not start application: {}", e.getMessage)
   }
 }

@@ -4,7 +4,7 @@
 		module="scalacrud-build"
 		revision="0.1.0-SNAPSHOT"
 		status="integration"
-		publication="20180404121809"
+		publication="20180405102202"
 		e:sbtVersion="1.0" e:scalaVersion="2.12"
 	>
 		<description>
