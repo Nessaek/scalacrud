@@ -1,0 +1,3 @@
+# scalacrud
+
+Mongo/Scala CRUD
